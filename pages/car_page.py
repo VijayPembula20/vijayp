@@ -1,6 +1,3 @@
-from datetime import time
-from random import random
-
 from selenium import webdriver
 from selenium.common import UnexpectedAlertPresentException, NoSuchElementException
 from selenium.webdriver.common.by import By
@@ -13,31 +10,12 @@ class CarPage:
         self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(10)
 
-    def __init__(self, driver):
-        self.driver = driver
-
     def open(self):
         self.driver.get(self.URL)
         self.driver.implicitly_wait(10)
         self.accept_cookies()
         self.driver.implicitly_wait(10)
         # self.clear_popups()
-
-    def fetch_valuation(self, registration_number):
-        self.open()
-        search_box = self.driver.find_element(By.ID, "//*[@id='vehicleReg']")
-        search_box.send_keys(registration_number)
-        search_box.send_keys(Keys.RETURN)
-        time.sleep(10)
-
-        mileage_box = self.driver.find_element(By.ID, "mileageInput")
-        mileage_box.send_keys(str(random.randint(5000, 100000)))
-        mileage_box.send_keys(Keys.RETURN)
-        time.sleep(2)
-
-        valuation_element = self.driver.find_element(By.ID, "valuation_box")
-        return valuation_element.text
-
 
     def enter_registration(self, registration):
         reg_input = self.driver.find_element(By.XPATH, "//*[@id='vehicleReg']")
